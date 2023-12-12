@@ -9,6 +9,11 @@ while True:
 
     if user_action.startswith('add'):
         todo = user_action[4:]
+        todo = todo.strip()
+        if todo == '':
+            print("There is nothing to add")
+            continue
+
         with open("todos.txt", 'a') as file:
             file.write(todo + '\n')
         print("Task", '"' + todo + '"', "successfully added")
