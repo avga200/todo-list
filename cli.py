@@ -1,6 +1,10 @@
 import functions
 import time
 
+"""
+TODO: What is the use of if "__main__" while writing functions  
+"""
+
 now = time.strftime('It is %B, %Y, %H:%M:%S')
 print(now)
 while True:
