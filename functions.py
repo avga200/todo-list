@@ -1,3 +1,11 @@
+import os
+
+
+if not os.path.exists('todos.txt'):
+    with open('todos.txt','w'):
+        pass
+
+
 def add_todo(element):
     with open('todos.txt', 'a') as file:
         file.write(element + '\n')

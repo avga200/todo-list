@@ -1,10 +1,9 @@
 import functions
 import time
 
-
-now = time.strftime('It is %B, %Y, %H:%M:%S')
-print(now)
 while True:
+    now = time.strftime('It is %B, %Y, %H:%M:%S')
+    print(now)
     user_action = input("Type add, show, edit, complete or exit\n")
     user_action = user_action.strip()
 
