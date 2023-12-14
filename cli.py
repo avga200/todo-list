@@ -1,9 +1,6 @@
 import functions
 import time
 
-"""
-TODO: What is the use of if "__main__" while writing functions  
-"""
 
 now = time.strftime('It is %B, %Y, %H:%M:%S')
 print(now)
@@ -40,7 +37,7 @@ while True:
                 print('Invalid Command')
             except IndexError:
                 print("The index is out of range")
-        functions.display(todos)
+        functions.push_todos(todos)
     elif user_action.startswith("complete"):
         try:
             with open("todos.txt", 'r') as file:
@@ -54,7 +51,7 @@ while True:
         except IndexError:
             print("The index is out of range")
             continue
-        functions.display(todos)
+        functions.push_todos(todos)
         print("Item marked for completion")
     elif user_action.startswith('exit'):
         print('Bye!')

@@ -1,15 +1,25 @@
 import functions
-import PySimpleGUI as sg
+import PySimpleGUI as SimpleGUI
+import time
 
-label = sg.Text("Enter a to-do")
-inputLabel = sg.InputText(tooltip="Enter a to-do", key="todo", do_not_clear=False)
-add = sg.Button("ADD")
-complete = sg.Button("COMPLETE")
-edit = sg.Button("EDIT")
-list_box = sg.Listbox(values=functions.get_todos(), key = 'todos', enable_events=True, size=[45,10])
-exit = sg.Button('EXIT')
-window = sg.Window("TO-DO List", layout=[[label, inputLabel],[add,complete,edit,exit],[list_box]], font=("Helvetica",13))
 
+def window_elements():
+    label_time = SimpleGUI.Text(time.strftime('%d %B %Y'))
+    label = SimpleGUI.Text("Enter a to-do")
+    input_label = SimpleGUI.InputText(tooltip="Enter a to-do", key="todo", do_not_clear=False)
+    add = SimpleGUI.Button("ADD")
+    complete = SimpleGUI.Button("COMPLETE")
+    edit = SimpleGUI.Button("EDIT")
+    list_box = SimpleGUI.Listbox(values=functions.get_todos(), key='todos', enable_events=True, size=(40, 5))
+    cross = SimpleGUI.Button('EXIT')
+    create_window = SimpleGUI.Window("TO-DO List",
+                                     layout=[[label_time], [label, input_label], [add, complete, edit, cross],
+                                             [list_box]],
+                                     font=("Helvetica", 13))
+    return create_window
+
+
+window = window_elements()
 while True:
     event, value = window.read()
     print(event, value)
@@ -18,19 +28,19 @@ while True:
             if value['todo'].strip() == '':
                 print("Enter a valid todo")
             else:
-                functions.add(value['todo'])
-                list_box.update(values= functions.get_todos())
+                functions.add_todo(value['todo'])
+                window['todos'].update(values=functions.get_todos())
         case 'COMPLETE':
             functions.complete(value['todos'])
-            list_box.update(values=functions.get_todos())
+            window['todos'].update(values=functions.get_todos())
         case 'EDIT':
             to_edit = value['todo']
-            prev_val = value['todos']
-            functions.edit(to_edit, prev_val[0])
-            print(to_edit,prev_val)
-            list_box.update(values=functions.get_todos())
-        case 'EXIT':
-            break
-        case sg.WIN_CLOSED:
+            try:
+                prev_val = value['todos'][0]
+            except IndexError:
+                print('choose a to-do')
+            functions.edit_todo(to_edit, prev_val)
+            window['todos'].update(values=functions.get_todos())
+        case 'EXIT' | SimpleGUI.WIN_CLOSED:
             break
 window.close()
