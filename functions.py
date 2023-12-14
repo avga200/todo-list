@@ -7,7 +7,6 @@ def add(s):
         for element in todos:
             element = element.strip()
             file.write(element + '\n')
-
 def get_todos():
     todo = list()
     with open('todos.txt','r') as file:
@@ -15,12 +14,30 @@ def get_todos():
         for i in todos:
             todo.append(i.strip())
     return todo
-def edit():
+def edit(one, two):
+    todos = get_todos()
+    ind = todos.index(two)
+    todos[ind] = one
+    with open("todos.txt","w") as file:
+        for element in todos:
+            element = element.strip()
+            file.write(element + '\n')
 
-    print('helll')
-def complete():
-    print('helllo')
+def complete(s):
+    try:
+        todos = get_todos()
+        todo = list()
+        for i in todos:
+            todo.append(i.strip())
 
+
+        todo.remove(s[0])
+        with open("todos.txt","w") as file:
+            for i in todo:
+                i = i.strip()
+                file.write(i+'\n')
+    except:
+        print('enter ')
 def display(todos):
     with open("todos.txt", 'w') as file:
         for element in todos:
